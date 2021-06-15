@@ -19,6 +19,8 @@
   "homepage": "https://github.com/akotra1999/VotingDapp#readme",
   "devDependencies": {
     "lite-server": "^2.6.1",
-    "truffle": "^5.3.2"
-  }
+    "truffle": "^5.3.2",
+    "truffle-contract": "^4.0.31"
+  },
+  "dependencies": {}
 }
