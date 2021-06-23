@@ -23,20 +23,12 @@ contract Voting {
     }
   }
 
-  function registerToVote(uint i) public {
-    require(i >= 0, "Election not available");
-    require(i < elections.length, "Election not available");
-    require(isEligibleToVote(i, msg.sender), "You cannot register to vote");
-    require(elections[i].registeredVoters[msg.sender] == 0, "You already registered to vote");
-    elections[i].registeredVoters[msg.sender] = 1;
-  }
-
   function vote(uint i, bytes32 candidate) public {
     require(i >= 0, "Election not available");
     require(i < elections.length, "Election not available");
     require(!voted(i, msg.sender), "You have already voted");
-    require(isRegisteredToVote(i, msg.sender), "You are not registered to vote");
-    elections[i].registeredVoters[msg.sender] = 2;
+    require(isEligibleToVote(i, msg.sender), "You are not eligible to vote");
+    elections[i].registeredVoters[msg.sender] = 1;
     elections[i].votes[candidate]++;
   }
 
@@ -50,12 +42,8 @@ contract Voting {
     return elections[i].open || elections[i].eligibleVoters[voter];
   }
 
-  function isRegisteredToVote(uint i, address voter) public view returns (bool) {
-    return elections[i].registeredVoters[voter] == 1;
-  }
-
   function voted(uint i, address voter) public view returns (bool) {
-    return elections[i].registeredVoters[voter] == 2;
+    return elections[i].registeredVoters[voter] == 1;
   }
 
   function getNumberOfVotes(uint i, bytes32 candidate) public view returns (uint) {

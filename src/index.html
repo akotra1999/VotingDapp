@@ -35,10 +35,19 @@
         <div class="card text-left">
           <h5 class="card-header" id="title">Election Title</h5>
           <div class="card-body">
-            <h5 class="card-title" id="candidates">Candidates</h5>
             <p class="card-text" id="election_id">Election ID</p>
             <p class="card-text" id="open">Election status</p>
-            <a href="#" class="btn btn-primary">Register to vote</a>
+            <form id="vote_form">
+              <div class="input-group">
+                <select class="form-control pb-2" id="candidates">
+                </select>
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" id="vote_button">Vote</button>
+                </div>
+              </div>
+            </form>
+            <ul id="results" class="list-group pt-2">
+            </ul>
           </div>
         </div>
       </div>
@@ -55,10 +64,19 @@
         <div class="card text-left">
           <h5 class="card-header" id="title">Election Title</h5>
           <div class="card-body">
-            <h5 class="card-title" id="candidates">Candidates</h5>
             <p class="card-text" id="election_id">Election ID</p>
             <p class="card-text" id="open">Election status</p>
-            <a href="#" class="btn btn-primary">Register to vote</a>
+            <form id="vote_form">
+              <div class="input-group">
+                <select class="form-control pb-2" id="candidates">
+                </select>
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" id="vote_button">Vote</button>
+                </div>
+              </div>
+            </form>
+            <ul id="results" class="list-group pt-2">
+            </ul>
           </div>
         </div>
       </div>
