@@ -20,8 +20,7 @@ App = {
 
       for (let i = numberOfElections - 1; i >= Math.max(0, numberOfElections - 3); i--) {
         let $newElectionTemplate = $electionTemplate.clone();
-        let election = await window.votingContract.methods.getElection(i).call();
-        await App.loadElectionCard($newElectionTemplate, election, i, window.votingContract, window.accounts[0], false);
+        await App.loadElectionCard($newElectionTemplate, i, false);
         $("#recent_elections_list").append($newElectionTemplate);
         $newElectionTemplate.show();
       }
@@ -35,13 +34,13 @@ App = {
 
     // https://blockchain.oodles.io/dev-blog/interacting-with-ethereum-smart-contracts-through-web3js-library/
     document.getElementById("search_result").style.display = "none";
-    let election = await window.votingContract.methods.getElection($("#search").val()).call();
     let $searchResult = $("#search_result");
-    await App.loadElectionCard($searchResult, election, $("#search").val(), votingContract, window.accounts[0], true);
+    await App.loadElectionCard($searchResult, $("#search").val(), true);
     $searchResult.show();
   },
 
-  loadElectionCard: async ($electionCard, electionData, electionID, votingContract, account, searchResult) => {
+  loadElectionCard: async ($electionCard, electionID, searchResult) => {
+    let electionData = await window.votingContract.methods.getElection(electionID).call();
     let candidates = electionData[0].map(c => web3.utils.hexToAscii(c));
     let candidateString = "";
 
@@ -56,7 +55,7 @@ App = {
       $electionCard.find("#open").html("Only some can vote.");
     }
     $electionCard.find("#title").html(electionData[2]);
-    let eligible = await window.votingContract.methods.isEligibleToVote(electionID, account).call();
+    let eligible = await window.votingContract.methods.isEligibleToVote(electionID, window.accounts[0]).call();
 
     if (eligible) {
       $electionCard.find("#vote_button").attr("class", "btn btn-primary");
@@ -66,7 +65,7 @@ App = {
       $electionCard.find("#vote_button").prop("disabled", true);
     }
     $electionCard.find("#vote_form").attr("onSubmit", "App.vote(" + electionID + ", " + searchResult + "); return false;");
-    let voted = await window.votingContract.methods.voted(electionID, account).call();
+    let voted = await window.votingContract.methods.voted(electionID, window.accounts[0]).call();
 
     $electionCard.find("#results").empty();
     if (voted) {
