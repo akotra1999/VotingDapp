@@ -13,6 +13,7 @@ contract Voting {
   }
 
   Election[] public elections;
+  mapping(address => uint[]) public postedElections;
   uint constant MAX_LENGTH = 15;
 
   function createElection(address[] memory voterPool, bytes32[] memory candidates, bool open, string memory title) public {
@@ -21,6 +22,7 @@ contract Voting {
     for(uint i = 0; i < voterPool.length; i++) {
       elections[elections.length - 1].eligibleVoters[voterPool[i]] = true;
     }
+    postedElections[msg.sender].push(elections.length - 1);
   }
 
   function vote(uint i, bytes32 candidate) public {
@@ -52,6 +54,10 @@ contract Voting {
 
   function getNumberOfElections() public view returns (uint) {
     return elections.length;
+  }
+
+  function getNumberOfElectionsCreatedByUser(address user) public view returns(uint) {
+    return postedElections[user].length;
   }
 
 }

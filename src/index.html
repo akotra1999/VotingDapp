@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <title>Voting Dapp</title>
 </head>
@@ -30,31 +30,11 @@
       </div>
     </div>
 
-    <div class="row pt-5 justify-content-center">
-      <div id="search_result" class="col-sm-4" style="display: none">
-        <div class="card text-left">
-          <h5 class="card-header" id="title">Election Title</h5>
-          <div class="card-body">
-            <p class="card-text" id="election_id">Election ID</p>
-            <p class="card-text" id="open">Election status</p>
-            <form id="vote_form">
-              <div class="input-group">
-                <select class="form-control pb-2" id="candidates">
-                </select>
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="submit" id="vote_button">Vote</button>
-                </div>
-              </div>
-            </form>
-            <ul id="results" class="list-group pt-2">
-            </ul>
-          </div>
-        </div>
-      </div>
+    <div id="searchResult" class="row pt-5 justify-content-center">
     </div>
 
     <div class="row pt-5">
-      <div id="search_result" class="col-sm">
+      <div class="col-sm">
         <h4>Recently posted elections</h4>
       </div>
     </div>
@@ -82,12 +62,65 @@
       </div>
     </row>
 
+    <div class="row pt-5">
+      <div class="col-sm">
+        <h4>Elections recently posted by you</h4>
+      </div>
+    </div>
+
+    <row id="elections_created_by_user_list" class="row justify-content-left">
+    </row>
+
+    <div class="row pt-5">
+      <div class="col-sm-3">
+        <h4>Post an election</h4>
+      </div>
+      <div class="col-sm-2">
+        <div class="toast" data-autohide="false">
+          <div class="toast-body">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pt-5">
+      <div class="col-sm">
+        <form id="election_form" onSubmit="App.postElection(); return false;">
+          <div class="form-group">
+            <input class="form-control" type="text" placeholder="Name of the election" id="name">
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="Eligible voters" aria-describedby="eligibleVoterHelp" id="voters"></textarea>
+            <small id="eligibleVoterHelp" class="text-muted">
+              Each address should be separated by a comma and space (e.g., 0xB0a19b8f32031ad8788472Eb4f746599dB8b4E62, 0x03F117ceb86095bD894bF2bD7824a60625B0e9Eb)
+            </small>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="Candidates" aria-describedby="candidateHelp" id="candidates"></textarea>
+            <small id="candidateHelp" class="text-muted">
+              Each candidate should be separated by a comma and space (e.g., chocolate, strawberry)
+            </small>
+          </div>
+          <div class="form-group">
+            <select class="form-control" id="open">
+              <option>Allow everybody to vote</option>
+              <option>Only allow eligible voters to vote</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Post</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
   </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="app.js"></script>
 <script src="vendor/web3/dist/web3.min.js"></script>
 
