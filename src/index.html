@@ -21,7 +21,7 @@
       <div class="col">
         <form onSubmit="App.search(); return false;">
           <div class="input-group">
-            <input type="text" class="form-control" id="search" placeholder="Search for an election...">
+            <input type="text" class="form-control" id="search" placeholder="Search for an election by ID #...">
             <div class="input-group-append">
               <button class="btn btn-primary" type="submit">Search</button>
             </div>
@@ -76,8 +76,9 @@
         <h4>Post an election</h4>
       </div>
       <div class="col-sm-2">
-        <div class="toast" data-autohide="false">
+        <div  id="toast" class="toast text-success" data-autohide="false">
           <div class="toast-body">
+            Election posted
           </div>
         </div>
       </div>

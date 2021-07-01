@@ -13,6 +13,7 @@ App = {
       } catch (error) {
         console.log("User denied account access");
       }
+      console.log(window.accounts[0]);
       let voting = await $.getJSON("Voting.json");
       window.votingContract = new window.web3.eth.Contract(voting.abi, voting.networks["5777"].address);
       let numberOfElections = await window.votingContract.methods.getNumberOfElections().call();
@@ -140,13 +141,9 @@ App = {
     if(voters[0] === "") {
       voters = [];
     }
-    $(".toast-body").html("Posting the election");
-    $(".toast").attr("class", "toast");
+
     await window.votingContract.methods.createElection(voters, candidates, open, name).send({from: window.accounts[0]});
-    $(".toast").toast("hide");
-    $(".toast-body").html("Election posted");
-    $(".toast").attr("class", "toast text-success");
-    $(".toast").toast("show");
+    $("#toast").toast("show");
   }
 }
 
