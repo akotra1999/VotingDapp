@@ -15,7 +15,6 @@ App = {
       } catch (error) {
         console.log("User denied account access");
       }
-      console.log(window.accounts[0]);
       let voting = await $.getJSON("Voting.json");
       window.votingContract = new window.web3.eth.Contract(voting.abi, voting.networks[App.kovanNetworkID].address);
       let numberOfElections = await window.votingContract.methods.getNumberOfElections().call();
@@ -28,13 +27,10 @@ App = {
         $newElectionTemplate.show();
       }
       let numberOfElectionsCreatedByUser =  await window.votingContract.methods.getNumberOfElectionsCreatedByUser(window.accounts[0]).call();
-      console.log(numberOfElectionsCreatedByUser);
 
       for(let i = numberOfElectionsCreatedByUser - 1; i >= Math.max(0, numberOfElectionsCreatedByUser - 3); i--) {
         let $newElectionTemplate = $electionTemplate.clone();
-        console.log("Testing load");
         let electionID = await window.votingContract.methods.postedElections(window.accounts[0], i).call();
-        console.log("Testing load 2");
         await App.loadElectionCard($newElectionTemplate, electionID, false, true);
         $("#elections_created_by_user_list").append($newElectionTemplate);
         $newElectionTemplate.show();
