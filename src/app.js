@@ -1,8 +1,10 @@
 App = {
+  kovanNetworkID: "42",
 
   load: async () => {
 
     // https://ethereum.org/en/developers/tutorials/set-up-web3js-to-use-ethereum-in-javascript/
+    // https://blockchain.oodles.io/dev-blog/interacting-with-ethereum-smart-contracts-through-web3js-library/
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
 
@@ -15,7 +17,7 @@ App = {
       }
       console.log(window.accounts[0]);
       let voting = await $.getJSON("Voting.json");
-      window.votingContract = new window.web3.eth.Contract(voting.abi, voting.networks["5777"].address);
+      window.votingContract = new window.web3.eth.Contract(voting.abi, voting.networks[App.kovanNetworkID].address);
       let numberOfElections = await window.votingContract.methods.getNumberOfElections().call();
       let $electionTemplate = $("#election_template");
 
@@ -46,8 +48,6 @@ App = {
 
   search: async () => {
 
-
-    // https://blockchain.oodles.io/dev-blog/interacting-with-ethereum-smart-contracts-through-web3js-library/
     $("#searchResult").html("");
     let $electionTemplate = $("#election_template");
     let $newElectionTemplate = $electionTemplate.clone();
